@@ -13,4 +13,6 @@ module.exports = {
     printWidth: 80,
     //화살표 함수가 하나의 매개변수를 받을 때 괄호를 생략
     arrowParens: 'avoid',
+    //Windows OS환경 'CR' error 발생 해결
+    endOfLine: 'auto', 
 };
