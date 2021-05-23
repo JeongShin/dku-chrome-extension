@@ -7,6 +7,7 @@ const initialSubject = {
   id: Date.now(),
   title: '',
   children: [],
+  editSpace: false,
 };
 
 const SubjectForm = ({ addSubjectHanlder }) => {

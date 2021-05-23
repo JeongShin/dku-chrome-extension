@@ -29,6 +29,17 @@ const Todo = ({ toggleTheme }) => {
     });
   };
 
+  const checkSubjectHandler = ({ subjectId }) => {
+    setTodos(
+      todos.map(item => {
+        if (item.id === subjectId) {
+          return { ...item, completed: true };
+        }
+        return item;
+      }),
+    );
+  };
+
   const removeSubjectHandler = ({ subjectId }) => {
     const isContinue = window.confirm('정말로 삭제 하시겠어요?');
 
@@ -41,6 +52,26 @@ const Todo = ({ toggleTheme }) => {
     });
   };
 
+  const editSpaceIsVisibleHandler = ({ subjectId }) => {
+    setTodos(
+      todos.map(item => {
+        if (item.id === subjectId) {
+          return { ...item, editSpace: true };
+        }
+        return item;
+      }),
+    );
+  };
+  const addDetailHandler = ({ todoItem }) => {
+    const detail = todoItem.children;
+    detail.push('ex');
+    setTodos(prev => {
+      const prevTodoList = [...prev];
+      localStorage.setItem(TODO_LIST_KEY, JSON.stringify(prevTodoList));
+      return prevTodoList;
+    });
+  };
+
   return (
     <TodoConatiner>
       <Toggler toggleTheme={toggleTheme} />
@@ -48,7 +79,11 @@ const Todo = ({ toggleTheme }) => {
       <TodoList
         todos={todos}
         setTodos={setTodos}
+        editSpaceIsVisibleHandler={editSpaceIsVisibleHandler}
+        addSubjectHanlder={addSubjectHanlder}
         removeSubjectHandler={removeSubjectHandler}
+        checkSubjectHandler={checkSubjectHandler}
+        addDetailHandler={addDetailHandler}
       />
     </TodoConatiner>
   );
@@ -67,15 +102,18 @@ const Input = styled.input`
   padding: 8px;
   font-size: 18px;
   line-height: 1.5;
+  margin 5px;
   color: black;
   flex: 1;
 `;
 
 const InsertButton = styled.div`
   color: ${({ theme }) => theme.textColor};
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 15px;
+  padding-right: 15px;
   font-size: 25px;
+  margin: 5px;
+  height: 55px;
   display: flex;
   align-items: center;
   cursor: pointer;
